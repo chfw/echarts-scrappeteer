@@ -1,8 +1,21 @@
 # echarts-scrappeteer
 
+[![Build Status](https://travis-ci.org/chfw/echarts-scrappeteer.svg?branch=master)](https://travis-ci.org/chfw/echarts-scrappeteer)
+
+
 ## Introduction
 
 It saves echarts as images. And it supports 3D charts :).
+
+## Node requirements
+
+Node 7.6.0 or later
+
+## Installation
+
+```shell
+$ npm i -g echarts-scrappeteer
+```
 
 ## Usage
 
