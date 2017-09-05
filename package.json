@@ -3,10 +3,10 @@
 	"version": "1.0.0",
 	"description": "Find all echarts in a web page and save them as image using puppeteer",
 	"bin": {
-		"scrappeteer": "./index.js"
-	}
+		"scrappeteer": "./src/main.js"
+	},
 	"scripts": {
-		"test": "echo \"Error: no test specified\" && exit 1"
+		"test": "nyc --reporter=lcovonly --reporter=text mocha"
 	},
 	"repository": {
 		"type": "git",
@@ -23,6 +23,13 @@
 	},
 	"homepage": "https://github.com/chfw/echarts-scrappeteer#readme",
 	"dependencies": {
+		"commander": "^2.11.0",
 		"puppeteer": "^0.9.0"
+	},
+	"devDependencies": {
+		"file-exists": "^4.0.0",
+		"nyc": "^11.2.0",
+		"rewire": "^2.5.2",
+		"mocha": "^3.5.0",
 	}
 }
