@@ -2,6 +2,7 @@ const fs = require('fs');
 const p = require('puppeteer');
 const path = require('path');
 const ProgressBar = require('progress');
+const chalk = require('chalk');
 
 
 var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
@@ -14,7 +15,8 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
 	await page.goto(urlOrFile, {waitUtil: 'networkidle'});
 
 	const numberOfCharts = await countCharts(page);
-	console.log("Found " + numberOfCharts + " echarts.");
+	console.log(chalk.green("Found ") + chalk.bold.red(numberOfCharts) +
+				chalk.green(" echarts."));
 
 	var barOpts = {
 		width: 20,
