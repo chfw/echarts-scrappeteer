@@ -23,7 +23,8 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
 		total: numberOfCharts,
 		clear: true
 	};
-	var bar = new ProgressBar(' uploading [:bar] :percent :etas', barOpts);
+	var bar = new ProgressBar(chalk.cyan('Scrappinging [:bar] :percent :etas'),
+							  barOpts);
 	for(i=0; i<numberOfCharts; i++){
 		const dataurl = await getAChart(page, imageFormat, i);
 		saveDataUrl(dataurl, i, outputName);
@@ -35,21 +36,29 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
 });
 
 
+var __count_charts__ = () => {
+	var echarts =  document.querySelectorAll('div[_echarts_instance_]');
+	return echarts.length;
+}
+
+var __get_chart__ = (args) => {
+	var ele =  document.querySelectorAll('div[_echarts_instance_]');
+	var mychart = echarts.getInstanceByDom(ele[args.index]);
+	return mychart.getDataURL({type:args.image_format,
+							   excludeComponents: ['toolbox']});
+}
+
 async function countCharts(page){
-	return await page.evaluate(() => {
-		var echarts =  document.querySelectorAll('div[_echarts_instance_]');
-		return echarts.length;
-	});
+	return await page.evaluate(__count_charts__);
 }
 
 
 async function getAChart(page, imageFormat, index){
-	return page.evaluate((args) => {
-		var ele =  document.querySelectorAll('div[_echarts_instance_]');
-		var mychart = echarts.getInstanceByDom(ele[args.index]);
-		return mychart.getDataURL({type:args.image_format,
-								   excludeComponents: ['toolbox']});
-	}, {image_format: imageFormat, index: index});
+	var args = {
+		image_format: imageFormat,
+		index: index
+	}
+	return page.evaluate(__get_chart__, args);
 }
 
 
