@@ -1,6 +1,7 @@
 const fs = require('fs');
 const p = require('puppeteer');
 const path = require('path');
+const ProgressBar = require('progress');
 
 
 var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
@@ -15,9 +16,16 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
 	const numberOfCharts = await countCharts(page);
 	console.log("Found " + numberOfCharts + " echarts.");
 
+	var barOpts = {
+		width: 20,
+		total: numberOfCharts,
+		clear: true
+	};
+	var bar = new ProgressBar(' uploading [:bar] :percent :etas', barOpts);
 	for(i=0; i<numberOfCharts; i++){
 		const dataurl = await getAChart(page, imageFormat, i);
 		saveDataUrl(dataurl, i, outputName);
+		bar.tick(1);
 	}
 
 	browser.close();

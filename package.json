@@ -24,12 +24,13 @@
 	"homepage": "https://github.com/chfw/echarts-scrappeteer#readme",
 	"dependencies": {
 		"commander": "^2.11.0",
+		"progress": "^2.0.0",
 		"puppeteer": "^0.9.0"
 	},
 	"devDependencies": {
 		"file-exists": "^4.0.0",
 		"nyc": "^11.2.0",
 		"rewire": "^2.5.2",
-		"mocha": "^3.5.0",
+		"mocha": "^3.5.0"
 	}
 }

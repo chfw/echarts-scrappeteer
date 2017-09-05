@@ -8,9 +8,12 @@ program
 	.option('-t, --type <imagetype>', 'image format')
 	.option('-o, --output <outputname>', 'output file name')
 	.action(function(url_or_file){
-		console.log('url: %s, type: %s, output: %s',
-					url_or_file, program.type, program.output);
-		console.log(scrappeteer);
+		if (typeof program.output === 'undefined'){
+			program.output = 'output';
+		}
+		if (typeof program.type === 'undefined'){
+			program.type = 'png';
+		}
 		scrappeteer(url_or_file, program.type, program.output);
 	})
 	.parse(process.argv);
