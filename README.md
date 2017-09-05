@@ -1,15 +1,11 @@
 # echarts-scrappeteer
 
-[![Build Status](https://travis-ci.org/chfw/echarts-scrappeteer.svg?branch=master)](https://travis-ci.org/chfw/echarts-scrappeteer)
+[![Build Status](https://travis-ci.org/chfw/echarts-scrappeteer.svg?branch=master)](https://travis-ci.org/chfw/echarts-scrappeteer) [![codecov](https://codecov.io/gh/chfw/echarts-scrappeteer/branch/master/graph/badge.svg)](https://codecov.io/gh/chfw/echarts-scrappeteer)
 
 
 ## Introduction
 
-It saves echarts as images. And it supports 3D charts :).
-
-## Node requirements
-
-Node 7.6.0 or later
+It scraps all echarts found in a web page as images. And it scraps 3D charts too.
 
 ## Installation
 
@@ -17,10 +13,21 @@ Node 7.6.0 or later
 $ npm i -g echarts-scrappeteer
 ```
 
+### requirements
+
+Node 7.6.0 or later
+
 ## Usage
 
 ```shell
-$ scrappeteer [url|local file path] [png|jepg]
+  Usage: scrappeteer [options] <url/file>
+
+
+  Options:
+
+    -f, --format <png/jpeg>    image format
+    -o, --output <outputname>  output file name
+    -h, --help                 output usage information
 ```
 
 ## Example

@@ -15,8 +15,8 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
 	await page.goto(urlOrFile, {waitUtil: 'networkidle'});
 
 	const numberOfCharts = await countCharts(page);
-	console.log(chalk.green("Found ") + chalk.bold.red(numberOfCharts) +
-				chalk.green(" echarts."));
+	console.log(chalk.cyan("Found ") + chalk.bold.green(numberOfCharts) +
+				chalk.cyan(" echarts."));
 
 	var barOpts = {
 		width: 20,
