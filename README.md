@@ -33,7 +33,7 @@ Node 7.6.0 or later
 ## Example
 
 ```
-$ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html png
+$ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
 Found 363 echarts
 ```
 
