@@ -1,11 +1,11 @@
-# echarts-scrappeteer
+# Echarts Scraper Puppeteer
 
 [![Build Status](https://travis-ci.org/chfw/echarts-scrappeteer.svg?branch=master)](https://travis-ci.org/chfw/echarts-scrappeteer) [![codecov](https://codecov.io/gh/chfw/echarts-scrappeteer/branch/master/graph/badge.svg)](https://codecov.io/gh/chfw/echarts-scrappeteer)
 
 
 ## Introduction
 
-It scraps all echarts found in a web page as images. And it scraps 3D charts too.
+It scrapes all echarts found in a web page as images. And it scrapes 3D charts too.
 
 ## Example
 
