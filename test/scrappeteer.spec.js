@@ -46,10 +46,29 @@ describe('Scrappeteer', function(){
 		stub.onCall(0).resolves(1);
 
 		getAChart(page, 'png', 1).then( (count)=>{
-			stub.callArgWith({
-				image_format: 'png',
-				index: 1
-			});
+		    assert.equal(count, 1);
 		});
 	});
+
+    it('should take snapshots', function(){
+        const p = require('puppeteer');
+        var browser = {
+            newPage: () => {
+                var fake_goto = sinon.stub();
+                fake_goto.onCall(0).resolves(1);
+                var page = {
+                    goto: fake_goto
+                }
+                return page;
+            },
+            close: sinon.spy()
+        }
+        var launch = sinon.stub(p, 'launch');
+        launch.returns(browser);
+        scrappeteer.__set__('countCharts', sinon.stub().returns(10));
+        scrappeteer.__set__('getAChart', sinon.stub().returns(0));
+        scrappeteer.__set__('saveDataUrl', sinon.stub().returns(0));
+        scrappeteer.snapshot('url', 'png', 'output');
+    });
+
 });

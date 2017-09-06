@@ -20,10 +20,10 @@ function main(url_or_file, format, output){
 	}
 	if (typeof format === 'undefined'){
 		format = 'png';
-	} else if (format != 'png' || format != 'jpeg'){
+	} else if (format != 'png' && format != 'jpeg'){
 		console.error(chalk.cyan("Unsupported file format : ") +
 					  chalk.bold.red(format));
 		process.exit(1);
 	}
-	scrappeteer(url_or_file, format, output);
+	scrappeteer.snapshot(url_or_file, format, output);
 }

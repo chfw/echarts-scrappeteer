@@ -11,7 +11,7 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName) => {
 	}
 
 	const browser = await p.launch({headless: false});
-	const page = await browser.newPage();
+        const page = await browser.newPage();
 	await page.goto(urlOrFile, {waitUtil: 'networkidle'});
 
 	const numberOfCharts = await countCharts(page);
@@ -73,4 +73,6 @@ function saveDataUrl(dataurl, index, outputName){
 }
 
 
-module.exports = takeSnapshots;
+module.exports = {
+    snapshot: takeSnapshots
+};
