@@ -11,6 +11,13 @@ It scraps all echarts found in a web page as images. And it scraps 3D charts too
 
 ![demo](https://github.com/chfw/echarts-scrappeteer/blob/master/demo.gif)
 
+
+Here is the command for your discretion:
+
+```
+$ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
+```
+
 ## Installation
 
 ```shell
