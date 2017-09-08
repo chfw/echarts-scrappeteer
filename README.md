@@ -18,6 +18,10 @@ Here is the command for your discretion:
 $ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
 ```
 
+## Gallery
+
+![http://gallery.echartsjs.com/editor.html?c=xByUX8HuDZ](https://github.com/chfw/echarts-scrappeteer/blob/master/scraped-gallery/pig-plan.png)
+
 ## Installation
 
 ```shell
