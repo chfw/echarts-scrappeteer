@@ -9,7 +9,7 @@ It scrapes all echarts found in a web page as images. And it scrapes 3D charts t
 
 ## Example
 
-![demo](https://github.com/chfw/echarts-scrappeteer/blob/master/demo.gif)
+![demo](https://github.com/chfw/echarts-scrappeteer/raw/master/demo.gif)
 
 
 Here is the command for your discretion:
@@ -20,8 +20,8 @@ $ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
 
 ## Gallery
 
-![http://gallery.echartsjs.com/editor.html?c=calendar-effectScatter](https://github.com/chfw/echarts-scrappeteer/blob/master/scraped-gallery/step-count.png)
-![http://gallery.echartsjs.com/editor.html?c=xByUX8HuDZ](https://github.com/chfw/echarts-scrappeteer/blob/master/scraped-gallery/pig-plan.png)
+![http://gallery.echartsjs.com/editor.html?c=calendar-effectScatter](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/step-count.png)
+![http://gallery.echartsjs.com/editor.html?c=xByUX8HuDZ](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/pig-plan.png)
 
 ## Installation
 
