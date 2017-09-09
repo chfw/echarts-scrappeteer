@@ -1,6 +1,6 @@
 {
 	"name": "echarts-scrappeteer",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Find all echarts in a web page and save them as image using puppeteer",
 	"bin": {
 		"scrappeteer": "./src/main.js"
@@ -26,7 +26,7 @@
 		"chalk": "^2.1.0",
 		"commander": "^2.11.0",
 		"progress": "^2.0.0",
-		"puppeteer": "^0.9.0",
+		"puppeteer": "^0.10.2",
 		"sinon": "^3.2.1"
 	},
 	"devDependencies": {
