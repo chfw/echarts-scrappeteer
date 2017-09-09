@@ -1,38 +1,38 @@
 {
-	"name": "echarts-scrappeteer",
-	"version": "1.0.1",
-	"description": "Find all echarts in a web page and save them as image using puppeteer",
-	"bin": {
-		"scrappeteer": "./src/main.js"
-	},
-	"scripts": {
-		"test": "nyc --reporter=lcovonly --reporter=text mocha"
-	},
-	"repository": {
-		"type": "git",
-		"url": "git+https://github.com/chfw/echarts-scrappeteer.git"
-	},
-	"keywords": [
-		"echarts",
-		"puppeteer"
-	],
-	"author": "C.W. <wangc_2011@hotmail.com>",
-	"license": "ISC",
-	"bugs": {
-		"url": "https://github.com/chfw/echarts-scrappeteer/issues"
-	},
-	"homepage": "https://github.com/chfw/echarts-scrappeteer#readme",
-	"dependencies": {
-		"chalk": "^2.1.0",
-		"commander": "^2.11.0",
-		"progress": "^2.0.0",
-		"puppeteer": "^0.10.2",
-		"sinon": "^3.2.1"
-	},
-	"devDependencies": {
-		"file-exists": "^4.0.0",
-		"nyc": "^11.2.0",
-		"rewire": "^2.5.2",
-		"mocha": "^3.5.0"
-	}
+    "name": "echarts-scrappeteer",
+    "version": "1.0.2",
+    "description": "Find all echarts in a web page and save them as image using puppeteer",
+    "bin": {
+        "scrappeteer": "./src/main.js"
+    },
+    "scripts": {
+        "test": "nyc --reporter=lcovonly --reporter=text mocha"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/chfw/echarts-scrappeteer.git"
+    },
+    "keywords": [
+        "echarts",
+        "puppeteer"
+    ],
+    "author": "C.W. <wangc_2011@hotmail.com>",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/chfw/echarts-scrappeteer/issues"
+    },
+    "homepage": "https://github.com/chfw/echarts-scrappeteer#readme",
+    "dependencies": {
+        "chalk": "^2.1.0",
+        "commander": "^2.11.0",
+        "progress": "^2.0.0",
+        "puppeteer": "^0.10.2",
+        "sinon": "^3.2.1"
+    },
+    "devDependencies": {
+        "file-exists": "^4.0.0",
+        "nyc": "^11.2.0",
+        "rewire": "^2.5.2",
+        "mocha": "^3.5.0"
+    }
 }
