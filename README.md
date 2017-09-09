@@ -20,8 +20,9 @@ $ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
 
 ## Gallery
 
-![http://gallery.echartsjs.com/editor.html?c=calendar-effectScatter](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/step-count.png)
-![http://gallery.echartsjs.com/editor.html?c=xByUX8HuDZ](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/pig-plan.png)
+[![step count](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/step-count.png)](http://gallery.echartsjs.com/editor.html?c=calendar-effectScatter)
+[![pig plan](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/pig-plan.png)](http://gallery.echartsjs.com/editor.html?c=xByUX8HuDZ)
+[![surface wave](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/surface-wave.png)](http://gallery.echartsjs.com/editor.html?c=xHkcYXm9pe)
 
 ## Installation
 
