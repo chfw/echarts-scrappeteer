@@ -20,6 +20,7 @@ $ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
 
 ## Gallery
 
+![http://gallery.echartsjs.com/editor.html?c=calendar-effectScatter](https://github.com/chfw/echarts-scrappeteer/blob/master/scraped-gallery/step-count.png)
 ![http://gallery.echartsjs.com/editor.html?c=xByUX8HuDZ](https://github.com/chfw/echarts-scrappeteer/blob/master/scraped-gallery/pig-plan.png)
 
 ## Installation
