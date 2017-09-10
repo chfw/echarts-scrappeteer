@@ -7,6 +7,31 @@ const sinon = require('sinon');
 
 var scrappeteer = rewire(path.join(process.cwd(), 'src', 'scrappeteer.js'));
 
+const p = require('puppeteer');
+var browser = {
+	newPage: () => {
+		var page = {
+			goto: sinon.spy(),
+			waitForNavigation: sinon.spy(),
+			setViewport: sinon.spy(),
+			mainFrame: function(){
+				var mainFrame = {
+					childFrames: function(){
+						return ['fake child frame'];
+					}
+				}
+				return mainFrame;
+			}
+		};
+
+		return page;
+	},
+	close: sinon.spy()
+}
+var launch = sinon.stub(p, 'launch');
+launch.returns(browser);
+
+
 describe('Scrappeteer', function(){
 
 	it('should save data url as image', function(){
@@ -50,25 +75,26 @@ describe('Scrappeteer', function(){
 		});
 	});
 
-    it('should take snapshots', function(){
-        const p = require('puppeteer');
-        var browser = {
-            newPage: () => {
-                var fake_goto = sinon.stub();
-                fake_goto.onCall(0).resolves(1);
-                var page = {
-                    goto: fake_goto
-                }
-                return page;
-            },
-            close: sinon.spy()
-        }
-        var launch = sinon.stub(p, 'launch');
-        launch.returns(browser);
-        scrappeteer.__set__('countCharts', sinon.stub().returns(10));
-        scrappeteer.__set__('getAChart', sinon.stub().returns(0));
-        scrappeteer.__set__('saveDataUrl', sinon.stub().returns(0));
-        scrappeteer.snapshot('url', 'png', 'output');
-    });
+	it('should scrape many echarts', function(){
+		var scrapeEcharts = scrappeteer.__get__('scrapeEcharts');
+		/* Note: the following three statement is permanent */
+		scrappeteer.__set__('countCharts', sinon.stub().returns(10));
+		scrappeteer.__set__('getAChart', sinon.stub().returns(0));
+		scrappeteer.__set__('saveDataUrl', sinon.stub().returns(0));
+		scrapeEcharts('fake page', 'png', 'output');
+	});
+
+
+	describe('should take snapshots', function(){
+
+		it('from normal file/link', function(){
+			scrappeteer.snapshot('url', 'png', 'output');
+		});
+
+		it('on echarts gallery', function(){
+			scrappeteer.snapshot('http://gallery.echartsjs.com/echart', 'png', 'output');
+		});
+
+	});
 
 });

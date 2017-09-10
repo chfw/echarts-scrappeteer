@@ -8,31 +8,29 @@ const chalk = require('chalk');
 const ECHARTS_GALLERY = 'http://gallery.echartsjs.com/';
 
 
-var takeSnapshots = (async (urlOrFile, imageFormat, outputName, wait) => {
-    var timeout = 30 * 1000;
+var takeSnapshots = (async (urlOrFile, options) => {
     if(urlOrFile.indexOf("http") == -1 && urlOrFile.indexOf("file://") == -1){
         urlOrFile = 'file://' + path.join(process.cwd(), urlOrFile);
     }
 
-    const browser = await p.launch({headless: false, args:['--start-maximized']});
+    const browser = await p.launch({headless: false});
     const page = await browser.newPage();
     if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
-        timeout = 60 * 1000;
-        await page.setViewport({width: 1300, height: 800});
+        await page.setViewport(options.viewPort);
     }
-    await page.goto(urlOrFile, {waitUtil: 'networkidle', timeout: timeout});
+    await page.goto(urlOrFile, {waitUtil: 'networkidle'});
 
     try{
-        await page.waitForNavigation({timeout: wait});
+        await page.waitForNavigation({timeout: options.wait});
     }catch(e){
     }
 
-    const mainFrame = page.mainFrame();
-    if(mainFrame.url().indexOf(ECHARTS_GALLERY) != -1){
+    if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
+		const mainFrame = page.mainFrame();
         const childFrames = mainFrame.childFrames();
-        await scrape_echarts(childFrames[0], imageFormat, outputName);
+        await scrapeEcharts(childFrames[0], options.imageFormat, options.outputNAme)
     } else {
-        await scrape_echarts(page, imageFormat, outputName);
+        await scrapeEcharts(page, options.imageFormat, options.outputName);
     }
 
     browser.close();
@@ -40,7 +38,7 @@ var takeSnapshots = (async (urlOrFile, imageFormat, outputName, wait) => {
 });
 
 
-async function scrape_echarts(document, imageFormat, outputName){
+async function scrapeEcharts(document, imageFormat, outputName){
     const numberOfCharts = await countCharts(document);
     console.log(chalk.cyan("Found ") + chalk.bold.green(numberOfCharts) +
                 chalk.cyan(" echarts."));

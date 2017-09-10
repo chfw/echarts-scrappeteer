@@ -28,6 +28,7 @@ Node 7.6.0 or later
 
     -f, --format <png/jpeg>    image format
     -o, --output <outputname>  output file name
+    -w, --wait <delay in milli-seconds>  wait a while before scrapping
     -h, --help                 output usage information
 ```
 

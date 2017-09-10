@@ -29,5 +29,14 @@ function main(url_or_file, format, output, wait){
                       chalk.bold.red(format));
         process.exit(1);
     }
-    scrappeteer.snapshot(url_or_file, format, output, wait);
+    options = {
+        imageFormat: format,
+        outputName: output,
+        wait: wait,
+		viewPort: {
+			width: 1300,
+			height: 800
+		}
+    }
+    scrappeteer.snapshot(url_or_file, options);
 }
