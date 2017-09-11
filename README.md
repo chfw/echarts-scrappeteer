@@ -29,8 +29,12 @@ Node 7.6.0 or later
     -f, --format <png/jpeg>    image format
     -o, --output <outputname>  output file name
     -w, --wait <delay in milli-seconds>  wait a while before scrapping
+    -v, --viewPort <width,height>        force puppeteer to set viewport. for echarts gallery site only
     -h, --help                 output usage information
 ```
+
+If the page load speed is slow or if the resulting image is partial, `-w` parameter is
+required to delay the scrape action.
 
 ## Example
 
