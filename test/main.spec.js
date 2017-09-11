@@ -30,14 +30,14 @@ describe('main', function(){
         process.once('SIGTERM', () => {
             closeStub = sandbox.stub(server, 'close');
         });
-        main_func('file', 'gif', 'output', undefined);
+        main_func('file', 'tif', 'output', undefined);
     });
 
     it('should reject invalid view port', function(){
         process.once('SIGTERM', () => {
             closeStub = sandbox.stub(server, 'close');
         });
-        main_func('file', 'gif', 'output', [1, 2, 3]);
+        main_func('file', 'jpeg', 'output', [1, 2, 3]);
     });
 
 });

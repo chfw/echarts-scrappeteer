@@ -4,6 +4,9 @@ const path = require('path');
 const ProgressBar = require('progress');
 const chalk = require('chalk');
 
+var GIFEncoder = require('gifencoder');
+var PNG = require('png-js');
+
 
 const ECHARTS_GALLERY = 'http://gallery.echartsjs.com/';
 
@@ -13,29 +16,60 @@ var takeSnapshots = (async (urlOrFile, options) => {
         urlOrFile = 'file://' + path.join(process.cwd(), urlOrFile);
     }
 
+	var encoder = new GIFEncoder(options.clipRect.width, options.clipRect.height);
+	encoder.createWriteStream()
+		.pipe(fs.createWriteStream('myanimated.gif'));
+	
+	encoder.start();
+	encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
+	encoder.setDelay(options.frameInterval);  // frame delay in ms
+	encoder.setQuality(10); // image quality. 10 is default.
+
     const browser = await p.launch({headless: false});
     const page = await browser.newPage();
     if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
         await page.setViewport(options.viewPort);
     }
-    await page.goto(urlOrFile, {waitUtil: 'networkidle'});
+    page.goto(urlOrFile,{waitUtil: 'networkidle'});
 
     try{
         await page.waitForNavigation({timeout: options.wait});
     }catch(e){
     }
 
-    if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
-		const mainFrame = page.mainFrame();
-        const childFrames = mainFrame.childFrames();
-        await scrapeEcharts(childFrames[0], options.imageFormat, options.outputNAme)
-    } else {
-        await scrapeEcharts(page, options.imageFormat, options.outputName);
+	if(options.imageFormat === 'gif'){
+		await recordGif(page, options.outputName, options.clipRect, options.frameCounts, encoder);
+	}else{
+		if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
+			const mainFrame = page.mainFrame();
+			const childFrames = mainFrame.childFrames();
+			await scrapeEcharts(childFrames[0], options.imageFormat, options.outputNAme)
+		} else {
+			await scrapeEcharts(page, options.imageFormat, options.outputName);
+		}
     }
-
     browser.close();
 
 });
+
+
+async function recordGif(page, outputName, clipRect, frameCounts, encoder){
+	for(i=-5;i<frameCounts;i++){
+		var file_name = outputName+'.'+i+'.png';
+		await page.screenshot({path: file_name, clip: clipRect});
+		if(i > 0){
+			PNG.decode(file_name, function(pixels){
+				encoder.addFrame(pixels);
+			});
+		}/*
+		try{
+			await page.waitForNavigation({timeout: 2});
+		}catch(e){
+		}*/
+	}
+	//gifmaker(outputName, {width: clipRect.width, height: clipRect.height});
+	encoder.finish();
+}
 
 
 async function scrapeEcharts(document, imageFormat, outputName){

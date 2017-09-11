@@ -17,19 +17,31 @@ program
     .option('-o, --output <outputname>', 'output file name')
     .option('-w, --wait <delay in milli-seconds>', 'wait a while before scrapping')
     .option('-v, --viewPort <width,height>', 'force puppeteer to set viewport. for echarts gallery site only', list)
+	.option('-r, --clipRectangle <x,y,width,height>', 'record rectangle when making gif animation', list)
+	.option('-c, --frameCounts <number>', 'of frames')
+	.option('-i, --frameInterval <number>', 'frame intervals')
     .action(function(url_or_file){
-        main(url_or_file, program.format, program.output, program.wait, program.viewPort);
+        main(url_or_file, program.format, program.output,
+			 program.wait, program.viewPort, program.clipRectangle,
+			 program.frameCounts, program.frameInterval);
     })
     .parse(process.argv);
 
 
-function main(url_or_file, format, output, wait, viewPort){
+function main(url_or_file, format, output, wait, viewPort, clipRect, frameCounts, frameInterval){
     if (typeof output === 'undefined'){
         output = 'output';
     }
     if (typeof wait === 'undefined'){
         wait= 100;
     }
+
+	if (typeof frameCounts === 'undefined'){
+		frameCounts = 1;
+	}
+	if (typeof frameInterval === 'undefined'){
+		frameInterval = 500;
+	}
 	if (typeof viewPort === 'undefined'){
 		viewPort = DEFAULT_VIEW_PORT;
 	} else if( viewPort.length != 2){
@@ -39,7 +51,7 @@ function main(url_or_file, format, output, wait, viewPort){
 	}
     if (typeof format === 'undefined'){
         format = 'png';
-    } else if (format != 'png' && format != 'jpeg'){
+    } else if (format != 'png' && format != 'jpeg' && format != 'gif'){
         console.error(chalk.cyan("Unsupported file format : ") +
                       chalk.bold.red(format));
         process.exit(1);
@@ -50,8 +62,18 @@ function main(url_or_file, format, output, wait, viewPort){
         wait: wait,
 		viewPort: {
 			width: viewPort[0],
-			height: viewPort[1]
-		}
+			height: viewPort[1],
+			deviceScaleFactor: 2
+		},
+		clipRect: {
+			x: parseInt(clipRect[0], 10),
+			y: parseInt(clipRect[1], 10),
+			width: parseInt(clipRect[2], 10),
+			height: parseInt(clipRect[3], 10) 
+		},
+		skip: [1],
+		frameCounts: parseInt(frameCounts),
+		frameInterval: parseInt(frameInterval)
     }
     scrappeteer.snapshot(url_or_file, options);
 }
