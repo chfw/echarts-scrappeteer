@@ -19,7 +19,7 @@ var takeSnapshots = (async (urlOrFile, options) => {
 	var encoder = new GIFEncoder(options.clipRect.width, options.clipRect.height);
 	encoder.createWriteStream()
 		.pipe(fs.createWriteStream('myanimated.gif'));
-	
+
 	encoder.start();
 	encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
 	encoder.setDelay(options.frameInterval);  // frame delay in ms
@@ -55,19 +55,14 @@ var takeSnapshots = (async (urlOrFile, options) => {
 
 async function recordGif(page, outputName, clipRect, frameCounts, encoder){
 	for(i=-5;i<frameCounts;i++){
-		var file_name = outputName+'.'+i+'.png';
+		var file_name = outputName+'.'+i+'.png'; // for debugging, let's save to file system.
 		await page.screenshot({path: file_name, clip: clipRect});
 		if(i > 0){
 			PNG.decode(file_name, function(pixels){
 				encoder.addFrame(pixels);
 			});
-		}/*
-		try{
-			await page.waitForNavigation({timeout: 2});
-		}catch(e){
-		}*/
+		}
 	}
-	//gifmaker(outputName, {width: clipRect.width, height: clipRect.height});
 	encoder.finish();
 }
 
