@@ -16,7 +16,7 @@ program
     .option('-f, --format <png/jpeg>', 'image format')
     .option('-o, --output <outputname>', 'output file name')
     .option('-w, --wait <delay in milli-seconds>', 'wait a while before scrapping')
-    .option('-v, --viewPort <width,height,scaleFactor>', 'force puppeteer to set viewport. for echarts gallery site only', list)
+    .option('-v, --viewPort <width,height>', 'force puppeteer to set viewport. for echarts gallery site only', list)
 	.option('-r, --clipRectangle <x,y,width,height>', 'record rectangle when making gif animation', list)
 	.option('-c, --frameCounts <number>', 'of frames')
 	.option('-i, --frameInterval <number>', 'frame intervals')
@@ -44,7 +44,7 @@ function main(url_or_file, format, output, wait, viewPort, clipRect, frameCounts
 	}
 	if (typeof viewPort === 'undefined'){
 		viewPort = DEFAULT_VIEW_PORT;
-	} else if( viewPort.length != 3){
+	} else if( viewPort.length != 2){
 		console.error(chalk.cyan("Wrong view port parameter :") +
 					  chalk.bold.red(viewPort))
 		process.exit(1);
@@ -63,7 +63,7 @@ function main(url_or_file, format, output, wait, viewPort, clipRect, frameCounts
 		viewPort: {
 			width: parseInt(viewPort[0], 10),
 			height: parseInt(viewPort[1], 10),
-			deviceScaleFactor: parseInt(viewPort[2], 10)
+			deviceScaleFactor: 1
 		},
 		clipRect: {
 			x: parseInt(clipRect[0], 10),
