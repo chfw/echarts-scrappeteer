@@ -54,16 +54,16 @@ async function recordGif(page, options){
   encoder.setDelay(options.frameInterval);  // frame delay in ms
   encoder.setQuality(10); // image quality. 10 is default.
 
-  for(i=-5;i<options.frameCounts;i++){
+  for(i=0;i<options.frameCounts;i++){
     var pngBuffer = await page.screenshot({clip: options.clipRect});
-    if(i > 0){
+    if(i > options.skipFrames){
       var png = new PNG(pngBuffer);
       png.decode(function(pixels){
 	encoder.addFrame(pixels);
       });
     }
     try{
-      await page.waitForNavigation({timeout: 200});
+      await page.waitForNavigation({timeout: options.snapshotInterval});
     }catch(e){
     }
 

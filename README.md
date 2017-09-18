@@ -22,19 +22,21 @@ Node 7.6.0 or later
 
 ```shell
 
-  Usage: main [options] <url/file>
+Usage: main [options] <url/file>
 
 
-  Options:
+Options:
 
-    -f, --format <png/jpeg>                 image format
-    -o, --output <outputname>               output file name
-    -w, --wait <delay in milli-seconds>     wait a while before scrapping
-    -v, --viewPort <width,height>           force puppeteer to set viewport. for echarts gallery site only
-    -r, --clipRectangle <x,y,width,height>  record rectangle when making gif animation
-    -c, --frameCounts <number>              of frames
-    -i, --frameInterval <number>            frame intervals
-    -h, --help                              output usage information
+  -f, --format <png/jpeg>                 image format
+  -o, --output <outputname>               output file name
+  -w, --wait <delay in milli-seconds>     wait a while before scrapping
+  -v, --viewPort <width,height>           force puppeteer to set viewport. for echarts gallery site only
+  -r, --clipRectangle <x,y,width,height>  record rectangle when making gif animation
+  -c, --frameCounts <number>              of frames. gif only
+  -i, --frameInterval <number>            frame intervals. gif only
+  -s, --skipFrames <number>               skip initial frames. gif only
+  -g, --gap time<number>                  between each gif snapshot. gif only
+  -h, --help                              output usage information
 ```
 
 If the page load speed is slow or if the resulting image is partial, `-w` parameter is
@@ -70,7 +72,7 @@ Where does the `render.html` come from? It is genereted by pyecharts. Please vis
 ### Gif format :fire:
 
 ```shell
-node src/main.js http://gallery.echartsjs.com/editor.html?c=xrkJtnKJq- -w 2000 -f gif -r 525,50,770,750 -o gf3 -i 300 -c 10 -v 1300,800
+scrappeteer http://gallery.echartsjs.com/editor.html?c=xrkJtnKJq- -w 2000 -f gif -r 525,50,770,750 -o gf3 -i 300 -c 10 -v 1300,800
 ```
 
 [![high speed route](https://github.com/chfw/echarts-scrappeteer/raw/master/scraped-gallery/shenzhen.gif)](http://gallery.echartsjs.com/editor.html?c=xrkJtnKJq-)
