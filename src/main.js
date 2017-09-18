@@ -25,7 +25,7 @@ program
   .option('-c, --frameCounts <number>', 'of frames. gif only', intValue)
   .option('-i, --frameInterval <number>', 'frame intervals. gif only', intValue)
   .option('-s, --skipFrames <number>', 'skip initial frames. gif only', intValue)
-  .option('-g, --gap time<number>', 'between each gif snapshot. gif only', intValue)
+  .option('-g, --gapTime<number>', 'between each gif snapshot. gif only', intValue)
   .action(function(url_or_file){
     main(url_or_file, program);
   })
@@ -36,6 +36,9 @@ function main(url_or_file, program){
   var options = {}
   if(program.frameCounts){
     options.frameCounts = program.frameCounts;
+  }
+  if(program.gapTime){
+    options.snapshotInterval = program.gapTime;
   }
   if(program.frameInterval){
     options.frameInterval = program.frameInterval;

@@ -89,7 +89,8 @@ describe('Scrappeteer', function(){
         height: 211
       },
       outputName: "giftest",
-      frameCounts: 2
+      frameCounts: 2,
+      snapshotInterval: 1
     }
     recordGif(page, options);
   });
