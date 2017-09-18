@@ -75,6 +75,16 @@ describe('Scrappeteer', function(){
     });
   });
 
+  it('should record gif animation', function(){
+    var recordGif = scrappeteer.__get__('recordGif');
+    var page = {
+      screenshot: function(){
+        return fs.readFileSync(path.join(process.pwd, 'test', 'test.png'));
+      }
+    }
+    recordGif(page, 'hello', undefined, 1);
+  });
+
   it('should scrape many echarts', function(){
     var scrapeEcharts = scrappeteer.__get__('scrapeEcharts');
     /* Note: the following three statement is permanent */
@@ -93,6 +103,11 @@ describe('Scrappeteer', function(){
 
     it('on echarts gallery', function(){
       scrappeteer.snapshot('http://gallery.echartsjs.com/echart', 'png', 'output');
+    });
+
+    it(' of gif animation', function(){
+      scrappeteer.__set__('recordGif', sinon.stub().returns(0));
+      scrappeteer.snapshot('url', 'gif', 'output');
     });
 
   });

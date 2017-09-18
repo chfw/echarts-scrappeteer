@@ -29,7 +29,7 @@ var takeSnapshots = (async (urlOrFile, options) => {
   }
 
   if(options.imageFormat === 'gif'){
-    await recordGif(page, options.outputName, options.clipRect, options.frameCounts);
+    await recordGif(page, options);
   }else{
     if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
       const mainFrame = page.mainFrame();
@@ -44,24 +44,29 @@ var takeSnapshots = (async (urlOrFile, options) => {
 });
 
 
-async function recordGif(page, outputName, clipRect, frameCounts){
+async function recordGif(page, options){
   var encoder = new GIFEncoder(options.clipRect.width, options.clipRect.height);
   encoder.createWriteStream()
-    .pipe(fs.createWriteStream('myanimated.gif'));
+    .pipe(fs.createWriteStream(options.outputName + '.gif'));
 
   encoder.start();
   encoder.setRepeat(0);   // 0 for repeat, -1 for no-repeat
   encoder.setDelay(options.frameInterval);  // frame delay in ms
   encoder.setQuality(10); // image quality. 10 is default.
 
-  for(i=-5;i<frameCounts;i++){
-    var file_name = outputName+'.'+i+'.png'; // for debugging, let's save to file system.
-    await page.screenshot({path: file_name, clip: clipRect});
+  for(i=-5;i<options.frameCounts;i++){
+    var pngBuffer = await page.screenshot({clip: options.clipRect});
     if(i > 0){
-      PNG.decode(file_name, function(pixels){
+      var png = new PNG(pngBuffer);
+      png.decode(function(pixels){
 	encoder.addFrame(pixels);
       });
     }
+    try{
+      await page.waitForNavigation({timeout: 200});
+    }catch(e){
+    }
+
   }
   encoder.finish();
 }
