@@ -6,12 +6,12 @@ const chalk = require('chalk');
 
 
 const DEFAULTS = {
-  output: "output",
+  outputName: "output",
   wait: 100,
   frameCounts: 1,
   frameInterval: 500,
   viewPort: [1300, 800, 1],
-  format: 'png',
+  imageFormat: 'png',
 }
 
 
@@ -25,6 +25,12 @@ program
   .option('-c, --frameCounts <number>', 'of frames', intValue)
   .option('-i, --frameInterval <number>', 'frame intervals', intValue)
   .action(function(url_or_file){
+    main(url_or_file, program);
+  })
+  .parse(process.argv);
+
+
+function main(url_or_file, program){
     var options = {
       imageFormat: program.format,
       outputName: program.output,
@@ -52,19 +58,13 @@ program
         deviceScaleFactor: 1
       }
     }
-    main(url_or_file, options);
-  })
-  .parse(process.argv);
-
-
-function main(url_or_file, program){
-  var options = Object.assign({}, DEFAULTS, program);
-  if (options.format != 'png' && options.format != 'jpeg' && options.format != 'gif'){
+  var final_options = Object.assign({}, DEFAULTS, options);
+  if (final_options.imageFormat != 'png' && final_options.imageFormat != 'jpeg' && final_options.imageFormat != 'gif'){
     console.error(chalk.cyan("Unsupported file format : ") +
-                  chalk.bold.red(options.format));
+                  chalk.bold.red(final_options.imageFormat));
     process.exit(1);
   }
-  scrappeteer.snapshot(url_or_file, options);
+  scrappeteer.snapshot(url_or_file, final_options);
 }
 
 

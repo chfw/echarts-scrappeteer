@@ -79,10 +79,18 @@ describe('Scrappeteer', function(){
     var recordGif = scrappeteer.__get__('recordGif');
     var page = {
       screenshot: function(){
-        return fs.readFileSync(path.join(process.pwd, 'test', 'test.png'));
+        return fs.createReadStream(path.join(process.cwd(), 'test', 'test.png'));
       }
     }
-    recordGif(page, 'hello', undefined, 1);
+    var options = {
+      clipRect: {
+        width: 210,
+        height: 211
+      },
+      outputName: "giftest",
+      frameCounts: 1
+    }
+    recordGif(page, options);
   });
 
   it('should scrape many echarts', function(){
@@ -91,14 +99,14 @@ describe('Scrappeteer', function(){
     scrappeteer.__set__('countCharts', sinon.stub().returns(10));
     scrappeteer.__set__('getAChart', sinon.stub().returns(0));
     scrappeteer.__set__('saveDataUrl', sinon.stub().returns(0));
-    scrapeEcharts('fake page', 'png', 'output');
+    scrapeEcharts('fake page', {imageFormat:'png', outputName:'output'});
   });
 
 
   describe('should take snapshots', function(){
 
     it('from normal file/link', function(){
-      scrappeteer.snapshot('url', 'png', 'output');
+      scrappeteer.snapshot('url', {imageFormat:'png', outputName:'output'});
     });
 
     it('on echarts gallery', function(){
@@ -107,7 +115,7 @@ describe('Scrappeteer', function(){
 
     it(' of gif animation', function(){
       scrappeteer.__set__('recordGif', sinon.stub().returns(0));
-      scrappeteer.snapshot('url', 'gif', 'output');
+      scrappeteer.snapshot('url', {imageFormat:'gif', outputName:'output'});
     });
 
   });

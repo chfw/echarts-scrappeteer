@@ -16,7 +16,7 @@ var takeSnapshots = (async (urlOrFile, options) => {
     urlOrFile = 'file://' + path.join(process.cwd(), urlOrFile);
   }
 
-  const browser = await p.launch({headless: false});
+  const browser = await p.launch({headless: false, timeout: options.wait});
   const page = await browser.newPage();
   if(urlOrFile.indexOf(ECHARTS_GALLERY) != -1){
     await page.setViewport(options.viewPort);

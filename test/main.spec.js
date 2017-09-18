@@ -38,7 +38,7 @@ describe('main', function(){
     process.once('SIGTERM', () => {
       closeStub = sandbox.stub(server, 'close');
     });
-    main_func('file', {format: 'jpeg', output: 'output', viewPort: [1, 2, 3]});
+    main_func('file', {format: 'jpeg', output: 'output', viewPort: [1, 2, 3, 4]});
   });
 
 });
@@ -57,5 +57,11 @@ describe('main utils', function(){
     assert.equal(result[0], 1);
     assert.equal(result[1], 2);
     assert.equal(result[2], 3);
+  });
+
+  it('should get default view port', function(){
+    const viewPort = main.__get__('viewPort');
+    var ret = viewPort('1,2');
+    assert.equal(ret[2], 1);
   });
 });
