@@ -79,8 +79,9 @@ describe('Scrappeteer', function(){
     var recordGif = scrappeteer.__get__('recordGif');
     var page = {
       screenshot: function(){
-        return fs.createReadStream(path.join(process.cwd(), 'test', 'test.png'));
-      }
+        return fs.readFileSync(path.join(process.cwd(), 'test', 'test.png'));
+      },
+      waitForNavigation: function(x){}
     }
     var options = {
       clipRect: {
@@ -88,7 +89,7 @@ describe('Scrappeteer', function(){
         height: 211
       },
       outputName: "giftest",
-      frameCounts: 1
+      frameCounts: 2
     }
     recordGif(page, options);
   });

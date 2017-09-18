@@ -27,6 +27,10 @@ describe('main', function(){
     assert(snapshot.called);
   });
 
+  it('should accept clip rectangle', function(){
+    main_func('file', {format: 'jpeg', output: 'output', clipRectangle: [1, 2, 3, 4]});
+  });
+
   it('should reject unsupported format', function(){
     process.once('SIGTERM', () => {
       closeStub = sandbox.stub(server, 'close');
