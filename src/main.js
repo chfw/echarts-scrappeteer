@@ -4,76 +4,54 @@ var program = require('commander');
 const scrappeteer = require('./scrappeteer');
 const chalk = require('chalk');
 
-const DEFAULT_VIEW_PORT = ['1300', '800', '1'];
 
-
-function list(val) {
-  return val.split(',');
+const DEFAULTS = {
+  output: "output",
+  wait: 100,
+  frameCounts: 1,
+  frameInterval: 500,
+  viewPort: [1300, 800, 1],
+  format: 'png',
 }
 
+
 program
-    .arguments('<url/file>')
-    .option('-f, --format <png/jpeg>', 'image format')
-    .option('-o, --output <outputname>', 'output file name')
-    .option('-w, --wait <delay in milli-seconds>', 'wait a while before scrapping')
-    .option('-v, --viewPort <width,height>', 'force puppeteer to set viewport. for echarts gallery site only', list)
-	.option('-r, --clipRectangle <x,y,width,height>', 'record rectangle when making gif animation', list)
-	.option('-c, --frameCounts <number>', 'of frames')
-	.option('-i, --frameInterval <number>', 'frame intervals')
-    .action(function(url_or_file){
-        main(url_or_file, program.format, program.output,
-			 program.wait, program.viewPort, program.clipRectangle,
-			 program.frameCounts, program.frameInterval);
-    })
-    .parse(process.argv);
+  .arguments('<url/file>')
+  .option('-f, --format <png/jpeg>', 'image format')
+  .option('-o, --output <outputname>', 'output file name')
+  .option('-w, --wait <delay in milli-seconds>', 'wait a while before scrapping')
+  .option('-v, --viewPort <width,height>', 'force puppeteer to set viewport. for echarts gallery site only', intArray)
+  .option('-r, --clipRectangle <x,y,width,height>', 'record rectangle when making gif animation', intArray)
+  .option('-c, --frameCounts <number>', 'of frames', intValue)
+  .option('-i, --frameInterval <number>', 'frame intervals', intValue)
+  .action(function(url_or_file){
+    main(url_or_file, program);
+  })
+  .parse(process.argv);
 
 
-function main(url_or_file, format, output, wait, viewPort, clipRect, frameCounts, frameInterval){
-    if (typeof output === 'undefined'){
-        output = 'output';
-    }
-    if (typeof wait === 'undefined'){
-        wait= 100;
-    }
+function main(url_or_file, program){
+  var options = Object.assign({}, DEFAULTS, program);
+  if( options.viewPort.length != 3){
+    console.error(chalk.cyan("Wrong view port parameter :") +
+		  chalk.bold.red(options.viewPort))
+    process.exit(1);
+  }
+  if (options.format != 'png' && options.format != 'jpeg' && options.format != 'gif'){
+    console.error(chalk.cyan("Unsupported file format : ") +
+                  chalk.bold.red(options.format));
+    process.exit(1);
+  }
+  console.log(options);
+  scrappeteer.snapshot(url_or_file, options);
+}
 
-	if (typeof frameCounts === 'undefined'){
-		frameCounts = 1;
-	}
-	if (typeof frameInterval === 'undefined'){
-		frameInterval = 500;
-	}
-	if (typeof viewPort === 'undefined'){
-		viewPort = DEFAULT_VIEW_PORT;
-	} else if( viewPort.length != 2){
-		console.error(chalk.cyan("Wrong view port parameter :") +
-					  chalk.bold.red(viewPort))
-		process.exit(1);
-	}
-    if (typeof format === 'undefined'){
-        format = 'png';
-    } else if (format != 'png' && format != 'jpeg' && format != 'gif'){
-        console.error(chalk.cyan("Unsupported file format : ") +
-                      chalk.bold.red(format));
-        process.exit(1);
-    }
-    options = {
-        imageFormat: format,
-        outputName: output,
-        wait: wait,
-		viewPort: {
-			width: parseInt(viewPort[0], 10),
-			height: parseInt(viewPort[1], 10),
-			deviceScaleFactor: 1
-		},
-		clipRect: {
-			x: parseInt(clipRect[0], 10),
-			y: parseInt(clipRect[1], 10),
-			width: parseInt(clipRect[2], 10),
-			height: parseInt(clipRect[3], 10)
-		},
-		skip: [1],
-		frameCounts: parseInt(frameCounts),
-		frameInterval: parseInt(frameInterval)
-    }
-    scrappeteer.snapshot(url_or_file, options);
+
+function intArray(val) {
+  return val.split(',').map(function(x){ return parseInt(x, 10) });
+}
+
+
+function intValue(val) {
+  return parseInt(val, 10);
 }

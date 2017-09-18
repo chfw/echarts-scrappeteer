@@ -16,28 +16,46 @@ var exitStub  = sandbox.stub(process, 'exit');
 
 describe('main', function(){
 
-    it('should handle a url', function(){
-        main_func('file', 'png', 'output', undefined);
-        assert(snapshot.called);
-    });
+  it('should handle a url', function(){
+    main_func('file', {format: 'png',
+                       output: 'output'});
+    assert(snapshot.called);
+  });
 
-    it('should handle undefined parameters', function(){
-        main_func('file', undefined, undefined, undefined);
-        assert(snapshot.called);
-    });
+  it('should handle undefined parameters', function(){
+    main_func('file', {});
+    assert(snapshot.called);
+  });
 
-    it('should reject unsupported format', function(){
-        process.once('SIGTERM', () => {
-            closeStub = sandbox.stub(server, 'close');
-        });
-        main_func('file', 'tif', 'output', undefined);
+  it('should reject unsupported format', function(){
+    process.once('SIGTERM', () => {
+      closeStub = sandbox.stub(server, 'close');
     });
+    main_func('file', { format: 'tif', output: 'output' });
+  });
 
-    it('should reject invalid view port', function(){
-        process.once('SIGTERM', () => {
-            closeStub = sandbox.stub(server, 'close');
-        });
-        main_func('file', 'jpeg', 'output', [1, 2, 3]);
+  it('should reject invalid view port', function(){
+    process.once('SIGTERM', () => {
+      closeStub = sandbox.stub(server, 'close');
     });
+    main_func('file', {format: 'jpeg', output: 'output', viewPort: [1, 2, 3]});
+  });
 
+});
+
+
+describe('main utils', function(){
+  it('should convert number string into number', function(){
+    const intValue = main.__get__('intValue');
+    var result = intValue('1000');
+    assert.equal(result, 1000);
+  });
+
+  it('should convert number string array into number array', function(){
+    const intArray = main.__get__('intArray');
+    var result = intArray('1,2,3');
+    assert.equal(result[0], 1);
+    assert.equal(result[1], 2);
+    assert.equal(result[2], 3);
+  });
 });
