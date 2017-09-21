@@ -1,4 +1,5 @@
 const fs = require('fs');
+const os = require('os');
 const p = require('puppeteer');
 const path = require('path');
 const ProgressBar = require('progress');
@@ -59,7 +60,7 @@ async function recordGif(page, options){
     if(i > options.skipFrames){
       var png = new PNG(pngBuffer);
       png.decode(function(pixels){
-	encoder.addFrame(pixels);
+        encoder.addFrame(pixels);
       });
     }
     try{
@@ -101,8 +102,10 @@ var __count_charts__ = () => {
 var __get_chart__ = (args) => {
   var ele =  document.querySelectorAll('div[_echarts_instance_]');
   var mychart = echarts.getInstanceByDom(ele[args.index]);
-  return mychart.getDataURL({type:args.image_format,
-                             excludeComponents: ['toolbox']});
+  return mychart.getDataURL({
+    type:args.image_format,
+    pixelRatio: args.devicePixelRatio,
+    excludeComponents: ['toolbox']});
 }
 
 async function countCharts(page){
@@ -113,8 +116,14 @@ async function countCharts(page){
 async function getAChart(page, imageFormat, index){
   var args = {
     image_format: imageFormat,
-    index: index
+    index: index,
+    devicePixelRatio: 1
   }
+  var is_mac = os.platform() === 'darwin';
+  if(is_mac){
+    args.devicePixelRatio = 2;
+  }
+  
   return page.evaluate(__get_chart__, args);
 }
 
