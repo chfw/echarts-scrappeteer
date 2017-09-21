@@ -7,7 +7,7 @@ const chalk = require('chalk');
 
 const DEFAULTS = {
   outputName: "output",
-  wait: 100,
+  wait: 30000,
   frameCounts: 1,
   frameInterval: 500,
   viewPort: [1300, 800, 1],
