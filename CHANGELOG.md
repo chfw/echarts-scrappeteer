@@ -1,5 +1,12 @@
 # Change log
 
+## 1.1.1 - 21.9.2017
+
+### Fixed
+
+1. Fix image quality issue under mac
+1. Fix default wait issue in 1.1.0. It is now 30 seconds.
+
 ## 1.1.0 - 19.9.2017
 
 ### Added
