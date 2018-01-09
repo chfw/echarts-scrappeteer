@@ -1,5 +1,11 @@
 # Change log
 
+## 1.2.0 - 9.1.2018
+
+### Added
+
+1. [#1](https://github.com/chfw/echarts-scrappeteer/issues/1) support svg output in echarts 3.8.x.
+
 ## 1.1.1 - 21.9.2017
 
 ### Fixed

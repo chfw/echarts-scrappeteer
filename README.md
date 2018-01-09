@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/chfw/echarts-scrappeteer.svg?branch=master)](https://travis-ci.org/chfw/echarts-scrappeteer) [![codecov](https://codecov.io/gh/chfw/echarts-scrappeteer/branch/master/graph/badge.svg)](https://codecov.io/gh/chfw/echarts-scrappeteer) [![npm version](https://badge.fury.io/js/echarts-scrappeteer.svg)](https://badge.fury.io/js/echarts-scrappeteer)
 
+For svg output, it is required that **echarts 3.8+** is used and the echarts instance
+is [renderred as svg](https://ecomfe.github.io/echarts-doc/public/en/tutorial.html#Render%20by%20Canvas%20or%20SVG).
 
 ## Introduction
 
@@ -22,12 +24,12 @@ Node 7.6.0 or later
 
 ```shell
 
-Usage: main [options] <url/file>
+Usage: scrappeteer [options] <url/file>
 
 
 Options:
 
-  -f, --format <png/jpeg>                 image format
+  -f, --format <png,jpeg,gif,svg>         image format
   -o, --output <outputname>               output file name
   -w, --wait <delay in milli-seconds>     wait a while before scrapping
   -v, --viewPort <width,height>           force puppeteer to set viewport. for echarts gallery site only
@@ -42,6 +44,8 @@ Options:
 If the page load speed is slow or if the resulting image is partial, `-w` parameter is
 required to delay the scrape action.
 
+Please note that if more than one echarts should be found in a page, `-f` option applies to all.
+
 ## Example
 
 ### Scrape echarts from a URL
@@ -51,7 +55,7 @@ required to delay the scrape action.
 Here is the command for your discretion:
 
 ```
-$ scrappeteer https://chfw.github.io/echarts-china-cities-js/preview.html
+$ scrappeteer https://pyecharts.github.io/echarts-china-cities-js/preview.html
 ```
 
 ### Scrape echarts from a local file
