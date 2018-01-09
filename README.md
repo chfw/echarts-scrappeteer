@@ -10,6 +10,8 @@ is [renderred as svg](https://ecomfe.github.io/echarts-doc/public/en/tutorial.ht
 It scrapes all echarts found in a web page as images. And it scrapes 3D charts too. Of course, it supports
 [pyecharts](https://github.com/chenjiandongx/pyecharts) as well. Please find the example in later section.
 
+![demo](https://github.com/chfw/echarts-scrappeteer/raw/master/demo.gif)
+
 ## Installation
 
 ```shell
@@ -49,8 +51,6 @@ Please note that if more than one echarts should be found in a page, `-f` option
 ## Example
 
 ### Scrape echarts from a URL
-
-![demo](https://github.com/chfw/echarts-scrappeteer/raw/master/demo.gif)
 
 Here is the command for your discretion:
 
