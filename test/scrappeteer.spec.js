@@ -75,6 +75,19 @@ describe('Scrappeteer', function(){
     });
   });
 
+  it('should get a svg chart', function(){
+    var getAChart = scrappeteer.__get__('getAChart');
+    var page = {
+      evaluate: () => {}
+    };
+    var stub = sinon.stub(page, 'evaluate');
+    stub.onCall(0).resolves(1);
+
+    getAChart(page, 'svg', 1).then( (count)=>{
+      assert.equal(count, 1);
+    });
+  });
+
   it('should record gif animation', function(){
     var recordGif = scrappeteer.__get__('recordGif');
     var page = {

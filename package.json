@@ -29,10 +29,10 @@
         "gifshot": "^0.3.2",
         "png-file-stream": "^1.0.0",
         "progress": "^2.0.0",
-        "puppeteer": "^0.10.2",
-        "sinon": "^3.2.1"
+        "puppeteer": "^0.13.0"
     },
     "devDependencies": {
+        "sinon": "^3.2.1",
         "file-exists": "^4.0.0",
         "nyc": "^11.2.0",
         "rewire": "^2.5.2",

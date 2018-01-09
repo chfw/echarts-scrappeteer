@@ -87,7 +87,11 @@ async function scrapeEcharts(document, imageFormat, outputName){
                             barOpts);
   for(i=0; i<numberOfCharts; i++){
     const dataurl = await getAChart(document, imageFormat, i);
-    saveDataUrl(dataurl, i, outputName);
+    if(imageFormat === 'svg'){
+      saveSvgFile(dataurl, i, outputName);
+    }else{
+      saveDataUrl(dataurl, i, outputName);
+    }
     bar.tick(1);
   }
 
@@ -108,6 +112,11 @@ var __get_chart__ = (args) => {
     excludeComponents: ['toolbox']});
 }
 
+var __get_svg_chart__ = (args) => {
+  var ele =  document.querySelectorAll('div[_echarts_instance_] svg');
+  return ele[args.index].outerHTML;
+}
+
 async function countCharts(page){
   return await page.evaluate(__count_charts__);
 }
@@ -124,7 +133,11 @@ async function getAChart(page, imageFormat, index){
     args.devicePixelRatio = 2;
   }
   
-  return page.evaluate(__get_chart__, args);
+  if (imageFormat === "svg"){
+    return page.evaluate(__get_svg_chart__, args);
+  }else{
+    return page.evaluate(__get_chart__, args);
+  }
 }
 
 
@@ -138,6 +151,10 @@ function saveDataUrl(dataurl, index, outputName){
   fs.writeFileSync(outputName + '.' + index + '.' + ext, buffer);
 }
 
+
+function saveSvgFile(dataurl, index, outputName){
+  fs.writeFileSync(outputName + '.' + index + '.svg', dataurl);
+}
 
 module.exports = {
   snapshot: takeSnapshots
